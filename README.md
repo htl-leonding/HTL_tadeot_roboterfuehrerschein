@@ -20,7 +20,7 @@ Dieses Repository umfasst alle wichtigen Infos sowie den Server und den Client f
 	
 3. **Packages, packages, packages**<br>
     You now need to install a few packages, which are necessary for **HOTRoad** to even function. You’ll need: 
-    >apt-get install hostapd isc-dhcp-server libjpeg8-dev imagemagick libv4l-dev
+    >$ apt-get install hostapd isc-dhcp-server libjpeg8-dev imagemagick libv4l-dev
 
     Now comes the fun part.
     
@@ -48,8 +48,8 @@ Dieses Repository umfasst alle wichtigen Infos sowie den Server und den Client f
     
     **For EDIMAX adapters**<br>
     If you are using a EDIMAX adapter you need to change the hostapd binary. Copy the given hostapd binary with the following script:
-	> mv /usr/sbin/hostapd /usr/sbin/hostapd.bak
-	cp /home/pi/dat/hostapd /usr/sbin/
+	> $ mv /usr/sbin/hostapd /usr/sbin/hostapd.bak<br>
+	> $ cp /home/pi/dat/hostapd /usr/sbin/
 	
 	
 5. **Configuring isc-dhcp-server**<br>
@@ -73,9 +73,9 @@ Dieses Repository umfasst alle wichtigen Infos sowie den Server und den Client f
 	
 6. **Configuring mjpg-streamer**<br>
     You need to build the given version of mjpg-streamer (no really, only the given version is working – at least for me). To achieve this you need to follow these commands:
-    >cd /home/pi/mjpg-streamer
-	ln –s /usr/include/linux/videodev2.h
-make mjpg_streamer input_file.so output_file.so
+    >$ cd /home/pi/mjpg-streamer <br>
+	>$ ln –s /usr/include/linux/videodev2.h <br>
+    $ make mjpg_streamer input_file.so output_file.so
 
 
 7. **Start scripts**<br>
@@ -87,12 +87,12 @@ make mjpg_streamer input_file.so output_file.so
     sudo java -jar "home/pi/dist/HOTRoad.jar" & sudo mjpg_streamer -i "./input_uvc.so -n -y -f 15 -q 20 -r 320x240" -o "./output_http.so -n -w ./www -p 80"
     ```
     Save the file under **“/etc/init.d/”** and run:
-	>update-rc.d /etc/init.d/hrinit.sh defaults
+	>$ update-rc.d /etc/init.d/hrinit.sh defaults
     
     Ignore the warnings: You are running a patchwork product.
     Now run these:
-	>update-rc.d hostapd enable
-	update-rc.d isc-dhcp-server enable
+	>$ update-rc.d hostapd enable <br>
+	$ update-rc.d isc-dhcp-server enable
 
 ### Good Job. You are done. Now restart your Raspberry Pi and get driving.
 
