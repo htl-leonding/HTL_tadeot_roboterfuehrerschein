@@ -1,0 +1,68 @@
+.text-field {
+    -fx-padding: 0;
+    -fx-border-radius: 0;
+    -fx-border-width: 0 0 2 0;
+    -fx-border-color: dodgerblue;
+    -fx-background-color: whitesmoke;
+}
+
+.text-field:focused {
+    -fx-border-color: deepskyblue;
+}
+
+.text-area{
+}
+
+.text-area .content {
+    -fx-padding: 10px;
+}
+
+.button {
+    -fx-border-radius: 3px;
+    -fx-background-color: dodgerblue;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.button:hover {
+    -fx-background-color: #66b3ff;
+}
+
+.button:pressed {
+    -fx-scale-x: 0.99;
+    -fx-scale-y: 0.97;
+}
+
+#connect-button{
+    -fx-background-color: forestgreen;
+    -fx-graphic: url("/images/connect.png");
+}
+
+#disconnect-button {
+    -fx-background-color: red;
+    -fx-graphic: url("/images/disconnect.png");
+}
+
+#focus-button {
+    -fx-graphic: url("/images/focus.png");
+}
+
+#forward-button {
+    -fx-graphic: url("/images/forward.png");
+}
+
+#backward-button {
+    -fx-graphic: url("/images/backward.png");
+}
+
+#left-button {
+    -fx-graphic: url("/images/left.png");
+}
+
+#right-button {
+    -fx-graphic: url("/images/right.png");
+}
+
+#stop-button {
+    -fx-graphic: url("/images/stop.png");
+}

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="400.0" stylesheets="@../styles/main.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.htl.leonding.pimpedhotroad.desktop.Controller">
+    <VBox layoutX="100.0" layoutY="65.0" prefHeight="200.0" prefWidth="100.0" spacing="10.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
+        <HBox spacing="5.0">
+            <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Server IP: ">
+                <font>
+                    <Font name="System Bold" size="13.0" />
+                </font>
+            </Label>
+            <TextField fx:id="tf_Ip" alignment="CENTER" prefWidth="90.0" promptText="Enter IP" text="10.10.0.1" />
+            <Pane maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+            <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Server Port: ">
+                <font>
+                    <Font name="System Bold" size="13.0" />
+                </font>
+            </Label>
+            <TextField fx:id="tf_Port" alignment="CENTER" prefWidth="80.0" promptText="Enter Port" text="13730" />
+        </HBox>
+        <HBox spacing="10.0">
+            <Button id="connect-button" fx:id="btn_Connect" graphicTextGap="6.0" maxWidth="-Infinity" mnemonicParsing="false" onAction="#connectClient" prefWidth="200.0" text="Connect" HBox.hgrow="ALWAYS" />
+            <Button id="disconnect-button" fx:id="btn_Disconnect" graphicTextGap="6.0" maxWidth="-Infinity" mnemonicParsing="false" onAction="#disconnectClient" prefWidth="200.0" text="Disconnect" HBox.hgrow="ALWAYS" />
+        </HBox>
+        <HBox>
+            <Button id="focus-button" fx:id="btn_FocusPanel" graphicTextGap="8.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#focusPanel" text="Focus Panel" HBox.hgrow="ALWAYS" />
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+        </HBox>
+        <Label text="Controls:">
+            <font>
+                <Font name="System Bold" size="16.0" />
+            </font>
+        </Label>
+        <HBox alignment="CENTER" maxHeight="-Infinity" prefHeight="50.0" VBox.vgrow="ALWAYS">
+            <Button id="forward-button" fx:id="btn_Forward" contentDisplay="CENTER" maxHeight="-Infinity" mnemonicParsing="false" onAction="#forwardMove" prefHeight="50.0" prefWidth="90.0" HBox.hgrow="ALWAYS">
+            <font>
+               <Font size="14.0" />
+            </font></Button>
+        </HBox>
+        <HBox alignment="CENTER" maxHeight="-Infinity" prefHeight="50.0" spacing="5.0" VBox.vgrow="ALWAYS">
+            <Button id="left-button" fx:id="btn_Left" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#leftMove" prefHeight="50.0" prefWidth="90.0" HBox.hgrow="ALWAYS">
+            <font>
+               <Font size="14.0" />
+            </font></Button>
+            <Button id="stop-button" fx:id="btn_Stop" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#stopMove" prefHeight="50.0" prefWidth="90.0" HBox.hgrow="ALWAYS">
+            <font>
+               <Font size="14.0" />
+            </font></Button>
+            <Button id="right-button" fx:id="btn_Right" contentDisplay="RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#rightMove" prefHeight="50.0" prefWidth="90.0" HBox.hgrow="ALWAYS">
+            <font>
+               <Font size="14.0" />
+            </font></Button>
+        </HBox>
+        <HBox alignment="CENTER" maxHeight="-Infinity" prefHeight="50.0" VBox.vgrow="ALWAYS">
+            <Button id="backward-button" fx:id="btn_Backwards" maxHeight="1.7976931348623157E308" mnemonicParsing="false" onAction="#backwardsMove" prefHeight="50.0" prefWidth="90.0" HBox.hgrow="ALWAYS">
+            <font>
+               <Font size="14.0" />
+            </font></Button>
+        </HBox>
+        <Label text="Log:">
+            <font>
+                <Font name="System Bold" size="16.0" />
+            </font>
+        </Label>
+        <TextArea fx:id="tf_Log" editable="false">
+            <font>
+                <Font name="FreeMono Bold" size="14.0" />
+            </font>
+        </TextArea>
+    </VBox>
+</AnchorPane>

@@ -1,0 +1,31 @@
+<resources>
+
+    <string name="app_name">PimpedHOTRoad</string>
+
+    <string name="forward">▲</string>
+    <string name="right">▶</string>
+    <string name="backward">▼</string>
+    <string name="left">◀</string>
+    <string name="stop">■</string>
+
+    <string name="about">About…</string>
+    <string name="about_text">Pimp my HOTRoad 2k15!</string>
+    <string name="secret_text">TO THE WAULL!</string>
+
+    <string name="wlan_enabled">WLAN was enabled!</string>
+    <string name="ip_address_label">Server IP</string>
+    <string name="port_label">Server Port</string>
+    <string name="default_ip_address">10.10.0.1</string>
+    <string name="default_port">13730</string>
+
+    <string name="connect">Connect</string>
+    <string name="progress_info">Connecting…</string>
+    <string name="connecting_failed">Error while connecting!</string>
+    <string name="connection_error">Networking error!</string>
+
+    <string name="play">▶ (Play song)</string>
+    <string name="pause">❚❚ (Pause song)</string>
+    <string name="next">▶▶ (Next song)</string>
+    <string name="prev">◀◀ (Previous song)</string>
+
+</resources>
