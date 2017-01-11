@@ -8,20 +8,25 @@ Dieses Repository umfasst alle wichtigen Infos sowie den Server und den Client f
     Use the parts from the given list (_“Stückliste.xlsx”_) and assemble them as the plan (_“Schaltplan.png”_) says. (You can also use a EDIMAX WiFi adapter)
 2. **Flash drive and copy files**<br>
     Copy the “hrinstall” folder from the Distribution directory onto a flash drive. When you’re done, plug the drive into your Raspberry Pi. You need to mount the flash drive with:
-    >$ mkdir /mnt/usb
-	>$ mount /dev/sda1 /mnt/usb/
-
+    ```
+   $ mkdir /mnt/usb
+	  $ mount /dev/sda1 /mnt/usb/
+    ```
     Copy the files from the flash drive with:
-	>$ cp /mnt/usb/* /home/pi/
-    
+	```
+	$ cp /mnt/usb/* /home/pi/
+    ```
     Now unmount the flash drive with:
-	>$ umount /mnt/usb/
-	
+	```
+	$ umount /mnt/usb/
+	```
 	
 3. **Packages, packages, packages**<br>
-    You now need to install a few packages, which are necessary for **HOTRoad** to even function. You’ll need: 
-    >$ apt-get install hostapd isc-dhcp-server libjpeg8-dev imagemagick libv4l-dev
-
+    You now need to install a few packages, which are necessary for **HOTRoad** to even function. You’ll need:   
+    
+    ```
+    $ apt-get install hostapd isc-dhcp-server libjpeg8-dev imagemagick libv4l-dev
+    ```
     Now comes the fun part.
     
     
@@ -48,9 +53,10 @@ Dieses Repository umfasst alle wichtigen Infos sowie den Server und den Client f
     
     **For EDIMAX adapters**<br>
     If you are using a EDIMAX adapter you need to change the hostapd binary. Copy the given hostapd binary with the following script:
-	> $ mv /usr/sbin/hostapd /usr/sbin/hostapd.bak<br>
-	> $ cp /home/pi/dat/hostapd /usr/sbin/
-	
+	```
+	 $ mv /usr/sbin/hostapd /usr/sbin/hostapd.bak
+	 $ cp /home/pi/dat/hostapd /usr/sbin/
+	```
 	
 5. **Configuring isc-dhcp-server**<br>
     Edit **“/etc/dhcp/dhcpd.conf”** and add the following:
@@ -73,10 +79,11 @@ Dieses Repository umfasst alle wichtigen Infos sowie den Server und den Client f
 	
 6. **Configuring mjpg-streamer**<br>
     You need to build the given version of mjpg-streamer (no really, only the given version is working – at least for me). To achieve this you need to follow these commands:
-    >$ cd /home/pi/mjpg-streamer <br>
-	>$ ln –s /usr/include/linux/videodev2.h <br>
+    ```
+    $ cd /home/pi/mjpg-streamer
+	  $ ln –s /usr/include/linux/videodev2.h
     $ make mjpg_streamer input_file.so output_file.so
-
+    ```
 
 7. **Start scripts**<br>
     Everything is going well? This is the last step in this guide. You now need to tell the system to start everything when it boots. Create a file called **"hrinit.sh"** and add the following lines:
@@ -87,13 +94,15 @@ Dieses Repository umfasst alle wichtigen Infos sowie den Server und den Client f
     sudo java -jar "home/pi/dist/HOTRoad.jar" & sudo mjpg_streamer -i "./input_uvc.so -n -y -f 15 -q 20 -r 320x240" -o "./output_http.so -n -w ./www -p 80"
     ```
     Save the file under **“/etc/init.d/”** and run:
-	>$ update-rc.d /etc/init.d/hrinit.sh defaults
-    
+	```
+	$ update-rc.d /etc/init.d/hrinit.sh defaults
+    ```
     Ignore the warnings: You are running a patchwork product.
     Now run these:
-	>$ update-rc.d hostapd enable <br>
+	```
+	$ update-rc.d hostapd enable <br>
 	$ update-rc.d isc-dhcp-server enable
-
+    ```
 ### Good Job. You are done. Now restart your Raspberry Pi and get driving.
 
 
