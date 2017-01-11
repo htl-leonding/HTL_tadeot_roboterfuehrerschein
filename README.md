@@ -9,8 +9,8 @@ Dieses Repository umfasst alle wichtigen Infos sowie den Server und den Client f
 2. **Flash drive and copy files**<br>
     Copy the “hrinstall” folder from the Distribution directory onto a flash drive. When you’re done, plug the drive into your Raspberry Pi. You need to mount the flash drive with:
     ```
-   $ mkdir /mnt/usb
-	  $ mount /dev/sda1 /mnt/usb/
+    $ mkdir /mnt/usb
+	$ mount /dev/sda1 /mnt/usb/
     ```
     Copy the files from the flash drive with:
 	```
@@ -81,7 +81,7 @@ Dieses Repository umfasst alle wichtigen Infos sowie den Server und den Client f
     You need to build the given version of mjpg-streamer (no really, only the given version is working – at least for me). To achieve this you need to follow these commands:
     ```
     $ cd /home/pi/mjpg-streamer
-	  $ ln –s /usr/include/linux/videodev2.h
+	$ ln –s /usr/include/linux/videodev2.h
     $ make mjpg_streamer input_file.so output_file.so
     ```
 
