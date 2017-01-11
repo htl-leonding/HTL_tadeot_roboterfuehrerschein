@@ -34,7 +34,7 @@ Dieses Repository umfasst alle wichtigen Infos sowie den Server und den Client f
     Open up “/etc/hostapd/hostapd.conf” add the following lines:
     ```
     interface=wlan0
-    driver=nl80211  **---> Use rtl871xdrv for EDIMAX adapters**
+    driver=nl80211  ---> Use rtl871xdrv for EDIMAX adapters
     ssid=HOTRoad
     hw_mode=g
     channel=11
@@ -62,10 +62,10 @@ Dieses Repository umfasst alle wichtigen Infos sowie den Server und den Client f
     Edit **“/etc/dhcp/dhcpd.conf”** and add the following:
 	```
 	subnet 10.10.0.0 netmask 255.255.0.0 {
-    range 10.10.0.25 10.10.0.50;
-    option domain-name-servers 8.8.4.4;
-    option routers 10.10.0.1;
-    interface wlan0;
+        range 10.10.0.25 10.10.0.50;
+        option domain-name-servers 8.8.4.4;
+        option routers 10.10.0.1;
+        interface wlan0;
     }
     ```
 
