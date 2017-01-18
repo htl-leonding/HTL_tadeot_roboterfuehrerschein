@@ -1,6 +1,12 @@
 # Roboter Führerschein (Tag der offenen Tür)
 Dieses Repository umfasst alle wichtigen Infos sowie den Server und den Client für das Projekt **HOTRoad** (_Himbeerkuchen on the Road_) welches am Tag der offenen Tür unter dem Namen **Roboter Führerschein** vorgeführt wird.
 
+### Was ist alles am Repo?
+ - **Client**: Hier befindet sich der Source Code beider Clients, mit denen man den Roboter ansteuren kann. Es gibt einen Desktop-Client für  den Rechner und einen Andriod-Client für das Handy. 
+ - **Server**: Hier befindet sich der Source Code für den Server (denn man auf dem Raspberry ausführen muss) welcher die Signale der Clients interpretiert.
+ - **Requirements**: Hier befindet sich einerseits die mpjpg_streamer Library welche für den Raspberry zum Streamen der Kamerabilder benötigt wird, und die JoyToKey Anwendung welche man benötigt um die Controller Inputs auf die richtigen Tastatur Inputs umwandelt.
+
+
 ### Installation Guide
 **WARNING**: This guide assumes you have a Raspberry Pi (Model B or newer/better) with Raspbian OS installed and 2 free USB ports. The Raspberry Pi must be connected to the internet and you’ll need to SSH onto it. You should also know how to gain superuser rights, because they are a necessity throughout the guide.
 
