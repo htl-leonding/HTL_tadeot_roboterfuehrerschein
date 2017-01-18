@@ -100,7 +100,7 @@ Dieses Repository umfasst alle wichtigen Infos sowie den Server und den Client f
     Ignore the warnings: You are running a patchwork product.
     Now run these:
 	```
-	$ update-rc.d hostapd enable <br>
+	$ update-rc.d hostapd enable
 	$ update-rc.d isc-dhcp-server enable
     ```
 ### Good Job. You are done. Now restart your Raspberry Pi and get driving.
