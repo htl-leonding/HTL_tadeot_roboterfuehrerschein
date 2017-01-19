@@ -4,6 +4,7 @@ Dieses Repository umfasst alle wichtigen Infos sowie den Server und den Client f
 ### Was ist alles am Repo?
  - **Client**: Hier befindet sich der Source Code beider Clients, mit denen man den Roboter ansteuren kann. Es gibt einen Desktop-Client für  den Rechner und einen Andriod-Client für das Handy. 
  - **Server**: Hier befindet sich der Source Code für den Server (denn man auf dem Raspberry ausführen muss) welcher die Signale der Clients interpretiert.
+ - **FührerscheinBuilder**: Hier befindet sich die Anwendung, mit der man die Führerscheine erstellen und als PDF exportieren kann um diese anschließend auszudrucken.
  - **Requirements**: Hier befindet sich einerseits die mpjpg_streamer Library welche für den Raspberry zum Streamen der Kamerabilder benötigt wird, und die JoyToKey Anwendung welche man benötigt um die Controller Inputs auf die richtigen Tastatur Inputs umwandelt.
 
 
