@@ -6,13 +6,19 @@ Dieses Repository umfasst alle wichtigen Infos sowie den Server und den Client f
  - **Server**: Hier befindet sich der Source Code für den Server (denn man auf dem Raspberry ausführen muss) welcher die Signale der Clients interpretiert.
  - **FührerscheinBuilder**: Hier befindet sich die Anwendung, mit der man die Führerscheine erstellen und als PDF exportieren kann um diese anschließend auszudrucken.
  - **Requirements**: Hier befindet sich einerseits die mpjpg_streamer Library welche für den Raspberry zum Streamen der Kamerabilder benötigt wird, und die JoyToKey Anwendung welche man benötigt um die Controller Inputs auf die richtigen Tastatur Inputs umwandelt.
-
+ - **Documents**: Hier befinden sich alle wichtigen Information für das Projekt sowie Schaltplan, Liste der Teile etc... .
 
 ### Installation Guide
 **WARNING**: This guide assumes you have a Raspberry Pi (Model B or newer/better) with Raspbian OS installed and 2 free USB ports. The Raspberry Pi must be connected to the internet and you’ll need to SSH onto it. You should also know how to gain superuser rights, because they are a necessity throughout the guide.
 
 1. **Assembly of the car**<br>
-    Use the parts from the given list (_“Stückliste.xlsx”_) and assemble them as the plan (_“Schaltplan.png”_) says. (You can also use a EDIMAX WiFi adapter)
+    Use the parts from the given list (_“Stückliste.xlsx”_) and assemble them as followed:<br>
+    ## Circuit Diagram:    
+    ![Schaltplan](/Documents/Schaltplan.png?raw=true) <br>
+    
+    ## Fritzing:
+    ![Fritzing](/Documents/Fritzing.png?raw=true)
+    
 2. **Flash drive and copy files**<br>
     Copy the “hrinstall” folder from the Distribution directory onto a flash drive. When you’re done, plug the drive into your Raspberry Pi. You need to mount the flash drive with:
     ```
