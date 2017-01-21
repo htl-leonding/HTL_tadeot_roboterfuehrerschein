@@ -12,7 +12,7 @@ Dieses Repository umfasst alle wichtigen Infos sowie den Server und den Client f
 **WARNING**: This guide assumes you have a Raspberry Pi (Model B or newer/better) with Raspbian OS installed and 2 free USB ports. The Raspberry Pi must be connected to the internet and you’ll need to SSH onto it. You should also know how to gain superuser rights, because they are a necessity throughout the guide.
 
 1. **Assembly of the car**<br>
-    Use the parts from the given list (_“Stückliste.xlsx”_) and assemble them as followed:<br>
+    Use the parts from the given list (_“Stückliste.ods”_) and assemble them as followed:<br>
     ## Circuit Diagram:    
     ![Schaltplan](/Documents/Schaltplan.png?raw=true) <br>
     
