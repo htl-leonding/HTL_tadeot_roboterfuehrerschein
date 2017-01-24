@@ -19,22 +19,7 @@ Dieses Repository umfasst alle wichtigen Infos sowie den Server und den Client f
     ## Fritzing:
     ![Fritzing](/Documents/Fritzing.png?raw=true)
     
-2. **Flash drive and copy files**<br>
-    Copy the “hrinstall” folder from the Distribution directory onto a flash drive. When you’re done, plug the drive into your Raspberry Pi. You need to mount the flash drive with:
-    ```
-    $ mkdir /mnt/usb
-	$ mount /dev/sda1 /mnt/usb/
-    ```
-    Copy the files from the flash drive with:
-	```
-	$ cp /mnt/usb/* /home/pi/
-    ```
-    Now unmount the flash drive with:
-	```
-	$ umount /mnt/usb/
-	```
-	
-3. **Packages, packages, packages**<br>
+2. **Packages, packages, packages**<br>
     You now need to install a few packages, which are necessary for **HOTRoad** to even function. You’ll need:   
     
     ```
@@ -43,7 +28,7 @@ Dieses Repository umfasst alle wichtigen Infos sowie den Server und den Client f
     Now comes the fun part.
     
     
-4. **Configuring hostapd**<br>
+3. **Configuring hostapd**<br>
     Open up “/etc/hostapd/hostapd.conf” add the following lines:
     ```
     interface=wlan0
@@ -71,7 +56,7 @@ Dieses Repository umfasst alle wichtigen Infos sowie den Server und den Client f
 	 $ cp /home/pi/dat/hostapd /usr/sbin/
 	```
 	
-5. **Configuring isc-dhcp-server**<br>
+4. **Configuring isc-dhcp-server**<br>
     Edit **“/etc/dhcp/dhcpd.conf”** and add the following:
 	```
 	subnet 10.10.0.0 netmask 255.255.0.0 {
@@ -90,7 +75,7 @@ Dieses Repository umfasst alle wichtigen Infos sowie den Server und den Client f
 	```
 	
 	
-6. **Configuring mjpg-streamer**<br>
+5. **Configuring mjpg-streamer**<br>
     You need to build the given version of mjpg-streamer (no really, only the given version is working – at least for me). To achieve this you need to follow these commands:
     ```
     $ cd /home/pi/mjpg-streamer
@@ -98,7 +83,7 @@ Dieses Repository umfasst alle wichtigen Infos sowie den Server und den Client f
     $ make mjpg_streamer input_file.so output_file.so
     ```
 
-7. **Start scripts**<br>
+6. **Start scripts**<br>
     Everything is going well? This is the last step in this guide. You now need to tell the system to start everything when it boots. Create a file called **"hrinit.sh"** and add the following lines:
     ```
     #!/bin/sh
