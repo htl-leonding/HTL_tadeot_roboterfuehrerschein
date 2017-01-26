@@ -47,6 +47,7 @@ public class Controller implements Initializable {
 
     private VehicleClient vehicleClient = new VehicleClient();
     private Stack<KeyCode> pressedKeys = new Stack<>();
+    private boolean connecting = false;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -105,21 +106,35 @@ public class Controller implements Initializable {
 
         //endregion
 
-        String ipAddress = tf_Ip.getText();
-        String port = tf_Port.getText();
 
-        log("Connecting to " + ipAddress + ":" + port + "...");
 
-        try {
-            vehicleClient.connect(ipAddress, Integer.parseInt(port));
-            log("Connected!");
-            log("==========");
-            setConnected(true);
-        } catch (Exception ex) {
+        if(connecting == false){
+            connecting = true;
+            String ipAddress = tf_Ip.getText();
+            String port = tf_Port.getText();
 
-            setConnected(false);
-            log(ex.getClass() + ": " + ex.getMessage());
+            log("Connecting to " + ipAddress + ":" + port + "...");
+
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        vehicleClient.connect(ipAddress, Integer.parseInt(port));
+                        log("Connected!");
+                        log("==========");
+                        setConnected(true);
+                    } catch (Exception ex) {
+
+                        setConnected(false);
+                        log(ex.getClass() + ": " + ex.getMessage());
+                    }
+                    connecting = false;
+                }
+            });
+            thread.start();
+
         }
+
     }
 
     @FXML
@@ -190,15 +205,19 @@ public class Controller implements Initializable {
     }
 
     private void send(Impulse impulse) {
-        try {
-            vehicleClient.send(impulse);
-            log("Sent: " + impulse.toString() + "!");
-        } catch (Exception ex) {
+        boolean sent = false;
+        while(sent == false) {
+            try {
+                vehicleClient.send(impulse);
+                sent = true;
+                log("Sent: " + impulse.toString() + "!");
+            } catch (Exception ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                log(ex.getMessage());
 
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-            log(ex.getMessage());
-
-            btn_Disconnect.fire();
+                sent = false;
+                vehicleClient.reconnect();
+            }
         }
     }
 

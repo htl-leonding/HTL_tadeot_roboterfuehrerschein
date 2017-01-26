@@ -37,8 +37,24 @@
     -fx-background-color: forestgreen;
     -fx-graphic: url("/images/connect.png");
 }
+#connect-button:hover{
+    -fx-background-color: lime;
+    -fx-graphic: url("/images/connect.png");
+}
+#connect-button:armed{
+    -fx-background-color: limegreen;
+    -fx-graphic: url("/images/connect.png");
+}
 
 #disconnect-button {
+    -fx-background-color: darkred;
+    -fx-graphic: url("/images/disconnect.png");
+}
+#disconnect-button:hover {
+    -fx-background-color: orangered;
+    -fx-graphic: url("/images/disconnect.png");
+}
+#disconnect-button:armed {
     -fx-background-color: red;
     -fx-graphic: url("/images/disconnect.png");
 }
