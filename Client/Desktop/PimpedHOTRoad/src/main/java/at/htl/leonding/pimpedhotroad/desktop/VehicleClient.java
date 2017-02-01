@@ -5,6 +5,7 @@ import at.htl.leonding.pimpedhotroad.model.Impulse;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.net.Inet4Address;
 import java.net.Socket;
 
 /**
@@ -21,6 +22,8 @@ public class VehicleClient implements Serializable {
     public void send(Impulse impulse) throws IOException {
         if (!socket.isClosed()) {
             stream.writeObject(impulse);
+        }else{
+            connect(socket.getInetAddress().getHostAddress(), socket.getPort());
         }
     }
 
@@ -41,5 +44,14 @@ public class VehicleClient implements Serializable {
 
     public boolean isConnected() {
         return socket.isConnected();
+    }
+
+    public void reconnect() {
+        try {
+            disconnect();
+            connect(socket.getInetAddress().getHostAddress(), socket.getPort());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

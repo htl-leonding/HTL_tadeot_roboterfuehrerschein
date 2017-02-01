@@ -7,7 +7,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
@@ -74,8 +77,10 @@ public class Builder {
 
         FopFactory fopFactory = FopFactory.newInstance();
         OutputStream out = null;
-        String xmlPath = pfad+"roboschein.xfd";
-        String pdfPath = pfad+"roboschein.pdf";
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy_MM_dd HH_mm_ss_SSS", Locale.ENGLISH);
+        String xmlPath = pfad+nachname+"_"+vorname+"_" + sdf.format(date) + "_roboschein.xfd";
+        String pdfPath = pfad+nachname+"_"+vorname+"_" + sdf.format(date) + "_roboschein.pdf";
         try {
             Document doc = new SAXBuilder().build(xmlPath);
             XMLOutputter xmlOutputter = new XMLOutputter();

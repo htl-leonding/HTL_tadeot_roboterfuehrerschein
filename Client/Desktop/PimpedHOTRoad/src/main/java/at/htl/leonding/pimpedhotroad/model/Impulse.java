@@ -1,5 +1,7 @@
 package at.htl.leonding.pimpedhotroad.model;
 
+import java.io.Serializable;
+
 /**
  * Available signal types for the phone to send; Communication protocol.
  *

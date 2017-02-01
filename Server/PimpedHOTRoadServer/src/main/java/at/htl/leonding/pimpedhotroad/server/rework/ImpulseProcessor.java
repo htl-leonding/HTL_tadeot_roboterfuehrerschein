@@ -1,52 +1,51 @@
-package at.htl.leonding.pimpedhotroad.server;
+package at.htl.leonding.pimpedhotroad.server.rework;
 
+import at.htl.leonding.pimpedhotroad.logger.FileLogger;
 import at.htl.leonding.pimpedhotroad.model.Impulse;
+import at.htl.leonding.pimpedhotroad.server.*;
 import com.pi4j.io.gpio.*;
-import java.io.*;
-import java.net.*;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Server thread implementation for the vehicle. It only receives impulses
- * (Impulse.java, see PimpedHOTRoadLib) and controls the RPi's GPIO pins.
- *
- * @author Bernard Marijanovic
+ * Created by michael on 1/26/17.
  */
-@Deprecated
-public class VehicleServer extends Thread {
+public class ImpulseProcessor extends Thread {
 
-    public static final int DEFAULT_PORT = 13730;
-    public static final String DEFAULT_MUSIC_DIR = "/home/pi/music/";
 
-    private final ServerSocket serverSocket;
-    private Socket socket; // Single client server
-    private ObjectInputStream input;
+    public interface ImpulseProcessorListener{
+        void onImpulseReceived(Socket socket, Impulse receivedImpulse);
+        void onImpulseProcessed(Socket socket, Impulse processedImpulse);
+        void onStreamDisconnected(Socket socket);
+    }
 
-    DirectoryPlayer player;
+    private Socket socket;
+    private List<ImpulseProcessorListener> listeners;
+    private boolean running = true;
 
+    private final DirectoryPlayer player;
     private final GpioController gpio;
-    private GpioPinDigitalOutput PWMA;
-    private GpioPinDigitalOutput AIN1;
-    private GpioPinDigitalOutput AIN2;
-    private GpioPinDigitalOutput PWMB;
-    private GpioPinDigitalOutput BIN1;
-    private GpioPinDigitalOutput BIN2;
-    private GpioPinDigitalOutput STBY;
 
-    private boolean running;
+    private volatile GpioPinDigitalOutput PWMA;
+    private volatile GpioPinDigitalOutput AIN1;
+    private volatile GpioPinDigitalOutput AIN2;
+    private volatile GpioPinDigitalOutput PWMB;
+    private volatile GpioPinDigitalOutput BIN1;
+    private volatile GpioPinDigitalOutput BIN2;
+    private volatile GpioPinDigitalOutput STBY;
 
-    /**
-     * Default constructor.
-     *
-     * @param port The port to which the car server should listen to
-     * @param musicDirectory The directory containing all music files (.wav)
-     * @throws IOException Networking error
-     */
-    public VehicleServer(int port, String musicDirectory) throws IOException {
-        serverSocket = new ServerSocket(port);
-
-        player = new DirectoryPlayer(musicDirectory);
+    public ImpulseProcessor(Socket socket, DirectoryPlayer player){
+        this.socket = socket;
+        this.listeners = new ArrayList<>();
+        this.player = player;
 
         gpio = GpioFactory.getInstance();
 
@@ -59,40 +58,64 @@ public class VehicleServer extends Thread {
         STBY = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_06);
     }
 
-    /**
-     * Main logic for the server.
-     */
+    public void addListener(ImpulseProcessorListener listener){
+        if(listener != null && listeners.contains(listener) == false) {
+            listeners.add(listener);
+        }
+    }
+
+    public void removeListener(ImpulseProcessorListener listener){
+        if(listener != null){
+            listeners.remove(listener);
+        }
+    }
+
     @Override
-    public synchronized void start() {
-        System.out.println("Server online: "
-                + serverSocket.getInetAddress().getHostAddress()
-                + ":" + serverSocket.getLocalPort());
+    public void run() {
+        try {
+            InputStream inputStream = socket.getInputStream();
+            ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
 
-        while (true) // "'Never quits!', des hosd ned söwa gschrim!" - Stuetz 2k14 
-        {
-            try {
-                socket = serverSocket.accept();
+            while(running == true) {
+                Object inputObject = objectInputStream.readObject();
 
-                System.out.println("Client connected: "
-                        + socket.getInetAddress().getHostAddress()
-                        + ":" + socket.getLocalPort());
+                if (inputObject instanceof Impulse) {
+                    Impulse impulse = (Impulse) inputObject;
 
-                running = true;
-                input = new ObjectInputStream(socket.getInputStream());
+                    for (ImpulseProcessorListener listener :
+                            listeners) {
+                        listener.onImpulseReceived(socket, impulse);
+                    }
 
-                while (running) {
-                    processImpulse((Impulse) input.readObject());
+                    processImpulse(impulse);
+
+                    for (ImpulseProcessorListener listener :
+                            listeners) {
+                        listener.onImpulseProcessed(socket, impulse);
+                    }
+                }else{
+                    FileLogger.getInstance().log(this.getClass(),
+                            "Got object that is not an impulse");
                 }
-
-                input.close();
-                socket.close();
-
-                System.out.println("Client disconnected.");
-
-            } catch (Exception ex) {
-                System.out.println("Error: Some problems happened. Quitting...");
-                Logger.getLogger(VehicleServer.class.getName()).log(Level.SEVERE, null, ex);
             }
+
+            objectInputStream.close();
+            inputStream.close();
+
+            objectInputStream = null;
+            inputStream = null;
+        } catch (IOException e) {
+            e.printStackTrace();
+            FileLogger.getInstance().log(this.getClass(), e.getMessage());
+            running = false;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            FileLogger.getInstance().log(this.getClass(), e.getMessage());
+        }
+
+        for (ImpulseProcessorListener listener :
+                listeners) {
+            listener.onStreamDisconnected(socket);
         }
     }
 
@@ -104,7 +127,7 @@ public class VehicleServer extends Thread {
      *
      * @param impulse Single impulse
      */
-    private void processImpulse(Impulse impulse) {
+    private synchronized void processImpulse(Impulse impulse) {
         System.out.println("Impulse received: " + impulse.toString());
 
         switch (impulse) {
@@ -178,7 +201,7 @@ public class VehicleServer extends Thread {
      *
      * @param impulse Music impulse
      */
-    private void processMusicImpulse(Impulse impulse) {
+    private synchronized void processMusicImpulse(Impulse impulse) {
         try {
             switch (impulse) {
                 case PLAY_SONG:
@@ -197,7 +220,7 @@ public class VehicleServer extends Thread {
             }
         } catch (Exception ex) {
             System.out.println("Music playback error! Doing nothing...");
-            Logger.getLogger(VehicleServer.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(at.htl.leonding.pimpedhotroad.server.VehicleServer.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
