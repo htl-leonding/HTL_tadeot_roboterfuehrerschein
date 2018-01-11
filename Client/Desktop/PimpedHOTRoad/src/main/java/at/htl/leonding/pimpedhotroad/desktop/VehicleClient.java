@@ -43,7 +43,7 @@ public class VehicleClient implements Serializable {
     }
 
     public boolean isConnected() {
-        return socket.isConnected();
+        return socket != null && socket.isConnected();
     }
 
     public void reconnect() {

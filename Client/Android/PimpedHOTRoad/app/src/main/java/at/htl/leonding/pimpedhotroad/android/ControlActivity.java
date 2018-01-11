@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import at.htl.leonding.pimpedhotroad.model.Impulse;
+
 import org.narcotek.pimpedhotroad.android.R;
 
 import java.io.IOException;
@@ -159,10 +160,18 @@ public class ControlActivity extends Activity {
      * @param impulse The impulse to send
      */
     private void sendImpulse(Impulse impulse) {
-        try {
-            client.send(impulse);
-        } catch (IOException ex) {
-            Toast.makeText(this, R.string.connection_error, Toast.LENGTH_SHORT).show();
-        }
+
+        final Impulse impulse1 = impulse;
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    client.send(impulse1);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 }

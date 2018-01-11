@@ -107,29 +107,25 @@ public class Controller implements Initializable {
         //endregion
 
 
-
-        if(connecting == false){
+        if (!connecting) {
             connecting = true;
             String ipAddress = tf_Ip.getText();
             String port = tf_Port.getText();
 
             log("Connecting to " + ipAddress + ":" + port + "...");
 
-            Thread thread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        vehicleClient.connect(ipAddress, Integer.parseInt(port));
-                        log("Connected!");
-                        log("==========");
-                        setConnected(true);
-                    } catch (Exception ex) {
+            Thread thread = new Thread(() -> {
+                try {
+                    vehicleClient.connect(ipAddress, Integer.parseInt(port));
+                    log("Connected!");
+                    log("==========");
+                    setConnected(true);
+                } catch (Exception ex) {
 
-                        setConnected(false);
-                        log(ex.getClass() + ": " + ex.getMessage());
-                    }
-                    connecting = false;
+                    setConnected(false);
+                    log(ex.getClass() + ": " + ex.getMessage());
                 }
+                connecting = false;
             });
             thread.start();
 
@@ -206,7 +202,7 @@ public class Controller implements Initializable {
 
     private void send(Impulse impulse) {
         boolean sent = false;
-        while(sent == false) {
+        while (!sent) {
             try {
                 vehicleClient.send(impulse);
                 sent = true;

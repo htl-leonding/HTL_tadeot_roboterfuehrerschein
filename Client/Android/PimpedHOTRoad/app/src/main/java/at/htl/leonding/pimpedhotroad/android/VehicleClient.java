@@ -61,6 +61,7 @@ public class VehicleClient implements Serializable {
      * @param impulse Impulse to send to the car server.
      */
     public void send(Impulse impulse) throws IOException {
+        System.out.println(impulse);
         stream.writeObject(impulse);
     }
 
