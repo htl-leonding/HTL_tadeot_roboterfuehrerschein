@@ -34,13 +34,14 @@ public class ImpulseProcessor extends Thread {
     private final DirectoryPlayer player;
     private final GpioController gpio;
 
-    private volatile GpioPinDigitalOutput PWMA;
-    private volatile GpioPinDigitalOutput AIN1;
-    private volatile GpioPinDigitalOutput AIN2;
-    private volatile GpioPinDigitalOutput PWMB;
-    private volatile GpioPinDigitalOutput BIN1;
-    private volatile GpioPinDigitalOutput BIN2;
-    private volatile GpioPinDigitalOutput STBY;
+    private static volatile GpioPinDigitalOutput PWMA;
+    private static volatile GpioPinDigitalOutput AIN1;
+    private static volatile GpioPinDigitalOutput AIN2;
+    private static volatile GpioPinDigitalOutput PWMB;
+    private static volatile GpioPinDigitalOutput BIN1;
+    private static volatile GpioPinDigitalOutput BIN2;
+    private static volatile GpioPinDigitalOutput STBY;
+    private static Object lock = new Object();
 
     public ImpulseProcessor(Socket socket, DirectoryPlayer player){
         this.socket = socket;
@@ -49,13 +50,17 @@ public class ImpulseProcessor extends Thread {
 
         gpio = GpioFactory.getInstance();
 
-        PWMA = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_00);
-        AIN2 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_01);
-        AIN1 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_02);
-        PWMB = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_03);
-        BIN1 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_04);
-        BIN2 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_05);
-        STBY = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_06);
+        synchronized (lock) {
+            if (PWMA == null) {
+                PWMA = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_00);
+                AIN2 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_01);
+                AIN1 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_02);
+                PWMB = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_03);
+                BIN1 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_04);
+                BIN2 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_05);
+                STBY = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_06);
+            }
+        }
     }
 
     public void addListener(ImpulseProcessorListener listener){

@@ -47,6 +47,8 @@ public class FileLogger {
         builder.append(System.lineSeparator());
         builder.append("\r\n");
 
+        System.out.println(builder.toString());
+
         try {
             BufferedWriter writer = new BufferedWriter(
                     new FileWriter(
