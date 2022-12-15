@@ -26,13 +26,12 @@ public class VehicleServer extends Thread {
     DirectoryPlayer player;
 
     private final GpioController gpio;
-    private GpioPinDigitalOutput PWMA;
-    private GpioPinDigitalOutput AIN1;
-    private GpioPinDigitalOutput AIN2;
-    private GpioPinDigitalOutput PWMB;
-    private GpioPinDigitalOutput BIN1;
-    private GpioPinDigitalOutput BIN2;
-    private GpioPinDigitalOutput STBY;
+    private GpioPinDigitalOutput ENA;
+    private GpioPinDigitalOutput IN1;
+    private GpioPinDigitalOutput IN2;
+    private GpioPinDigitalOutput ENB;
+    private GpioPinDigitalOutput IN3;
+    private GpioPinDigitalOutput IN4;
 
     private boolean running;
 
@@ -50,13 +49,12 @@ public class VehicleServer extends Thread {
 
         gpio = GpioFactory.getInstance();
 
-        PWMA = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_00);
-        AIN2 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_01);
-        AIN1 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_02);
-        PWMB = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_03);
-        BIN1 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_04);
-        BIN2 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_05);
-        STBY = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_06);
+        ENA = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_00);
+        IN2 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_01);
+        IN1 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_02);
+        ENB = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_03);
+        IN3 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_04);
+        IN4 = gpio.provisionDigitalOutputPin(RaspiPin.GPIO_05);
     }
 
     /**
@@ -109,58 +107,52 @@ public class VehicleServer extends Thread {
 
         switch (impulse) {
             case FORWARD:
-                AIN1.setState(PinState.HIGH);
-                AIN2.setState(PinState.LOW);
-                BIN1.setState(PinState.HIGH);
-                BIN2.setState(PinState.LOW);
-                STBY.setState(PinState.HIGH);
-                PWMA.setState(PinState.HIGH);
-                PWMB.setState(PinState.HIGH);
+                IN1.setState(PinState.HIGH);
+                IN2.setState(PinState.LOW);
+                IN3.setState(PinState.HIGH);
+                IN4.setState(PinState.LOW);
+                ENA.setState(PinState.HIGH);
+                ENB.setState(PinState.HIGH);
                 break;
             case RIGHT:
-                AIN1.setState(PinState.LOW);
-                AIN2.setState(PinState.LOW);
-                BIN1.setState(PinState.HIGH);
-                BIN2.setState(PinState.LOW);
-                STBY.setState(PinState.HIGH);
-                PWMA.setState(PinState.LOW);
-                PWMB.setState(PinState.HIGH);
+                IN1.setState(PinState.LOW);
+                IN2.setState(PinState.LOW);
+                IN3.setState(PinState.HIGH);
+                IN4.setState(PinState.LOW);
+                ENA.setState(PinState.LOW);
+                ENB.setState(PinState.HIGH);
                 break;
             case BACKWARD:
-                AIN1.setState(PinState.LOW);
-                AIN2.setState(PinState.HIGH);
-                BIN1.setState(PinState.LOW);
-                BIN2.setState(PinState.HIGH);
-                STBY.setState(PinState.HIGH);
-                PWMA.setState(PinState.HIGH);
-                PWMB.setState(PinState.HIGH);
+                IN1.setState(PinState.LOW);
+                IN2.setState(PinState.HIGH);
+                IN3.setState(PinState.LOW);
+                IN4.setState(PinState.HIGH);
+                ENA.setState(PinState.HIGH);
+                ENB.setState(PinState.HIGH);
                 break;
             case LEFT:
-                AIN1.setState(PinState.HIGH);
-                AIN2.setState(PinState.LOW);
-                BIN1.setState(PinState.LOW);
-                BIN2.setState(PinState.LOW);
-                STBY.setState(PinState.HIGH);
-                PWMA.setState(PinState.HIGH);
-                PWMB.setState(PinState.LOW);
+                IN1.setState(PinState.HIGH);
+                IN2.setState(PinState.LOW);
+                IN3.setState(PinState.LOW);
+                IN4.setState(PinState.LOW);
+                ENA.setState(PinState.HIGH);
+                ENB.setState(PinState.LOW);
                 break;
             case STOP:
-                AIN1.setState(PinState.LOW);
-                AIN2.setState(PinState.LOW);
-                BIN1.setState(PinState.LOW);
-                BIN2.setState(PinState.LOW);
-                STBY.setState(PinState.LOW);
-                PWMA.setState(PinState.LOW);
-                PWMB.setState(PinState.LOW);
+                IN1.setState(PinState.LOW);
+                IN2.setState(PinState.LOW);
+                IN3.setState(PinState.LOW);
+                IN4.setState(PinState.LOW);
+                ENA.setState(PinState.LOW);
+                ENB.setState(PinState.LOW);
                 break;
             case QUIT:
-                AIN1.setState(PinState.LOW);
-                AIN2.setState(PinState.LOW);
-                BIN1.setState(PinState.LOW);
-                BIN2.setState(PinState.LOW);
-                STBY.setState(PinState.LOW);
-                PWMA.setState(PinState.LOW);
-                PWMB.setState(PinState.LOW);
+                IN1.setState(PinState.LOW);
+                IN2.setState(PinState.LOW);
+                IN3.setState(PinState.LOW);
+                IN4.setState(PinState.LOW);
+                ENA.setState(PinState.LOW);
+                ENB.setState(PinState.LOW);
                 processMusicImpulse(Impulse.PAUSE_SONG);
                 running = false;
                 break;
